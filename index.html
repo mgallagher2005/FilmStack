@@ -1,248 +1,137 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Filmstack</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FilmStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1218;--p:#171b24;--tx:#e9ecf3;--mu:#8e96a8;--ac:#7cd4ff;--gd:#ffcf5a;--on:#08202c;--hf:"Iowan Old Style","Palatino Linotype",Georgia,serif;--r:12px;--bad:#ff7a86;--p2:color-mix(in srgb,var(--p),var(--tx) 8%);--ln:color-mix(in srgb,var(--p),var(--tx) 18%)}
-*{box-sizing:border-box;margin:0}
-body{background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
-a{color:inherit;text-decoration:none}
-h1,h2,h3,.logo{font-family:var(--hf);font-weight:600;letter-spacing:-.01em}
-button,input,textarea,select{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-#nav{position:sticky;top:0;z-index:20;display:flex;gap:18px;align-items:center;padding:12px 24px;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln)}
-#nav:empty{display:none}
-.logo{font-size:22px}.logo i{color:var(--ac);font-style:normal}
-#nav form{flex:1;max-width:420px}
-#nav input{width:100%;padding:8px 14px;border-radius:99px;background:var(--p);border:1px solid var(--ln)}
-.links{display:flex;gap:16px;margin-left:auto;color:var(--mu)}
-.links a:hover,.links a.on{color:var(--tx)}
-.wrap{max-width:1200px;margin:0 auto;padding:28px 24px 80px}
-.mu{color:var(--mu)}.err{color:var(--bad)}
-h2{font-size:26px;margin:28px 0 14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
-.grid.m{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
-.card{position:relative;display:block}
-.card img,.ph{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:var(--r);background:var(--p2);display:block;transition:transform .15s}
-.card:hover img{transform:translateY(-3px)}
-.card b{display:block;margin-top:8px;font-weight:500;font-size:14px;line-height:1.3}
-.card small{color:var(--mu)}
-.tag{position:absolute;top:8px;right:8px;background:color-mix(in srgb,var(--bg) 88%,transparent);color:var(--gd);padding:1px 8px;border-radius:99px;font-size:13px;font-weight:600}
-.tag.hr{right:auto;left:8px;color:#ff6b81}
-.hero{position:relative;min-height:340px;display:flex;align-items:flex-end;background-size:cover;background-position:center 20%}
-.hero:before,.bd:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg),color-mix(in srgb,var(--bg) 40%,transparent) 70%,color-mix(in srgb,var(--bg) 60%,transparent))}
-.hero>div{position:relative;max-width:1200px;margin:0 auto;padding:0 24px 28px;width:100%}
-.hero h1{font-size:clamp(30px,5vw,54px);line-height:1.05;max-width:700px}
-.hero p{max-width:560px;color:var(--mu);margin:10px 0 16px}
-.btn{display:inline-block;border:1px solid var(--ln);background:var(--p2);padding:8px 16px;border-radius:calc(var(--r)*.75);cursor:pointer}
-.btn:hover{border-color:var(--ac)}
-.btn.pri{background:var(--ac);color:var(--on);border-color:var(--ac);font-weight:600}
-.btn.s{padding:4px 12px;font-size:13px}
-.btn.on{border-color:var(--gd);color:var(--gd)}
-.btn.hr.on{border-color:#ff6b81;color:#ff6b81}
-.seg{display:inline-flex;gap:6px;margin:0 12px 0 0;vertical-align:middle;flex-wrap:wrap}
-.bd{position:absolute;left:0;right:0;top:0;height:460px;background-size:cover;background-position:center 20%;z-index:-1}
-.mv{position:relative;padding-top:230px}
-.top{display:flex;gap:28px;align-items:flex-end}
-.pw{width:230px;flex:none;display:flex;flex-direction:column;gap:8px}
-.pw img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:var(--r);box-shadow:0 14px 40px rgba(0,0,0,.5);background:var(--p2)}
-.info h1{font-size:clamp(28px,4vw,44px);line-height:1.08}
-.info h1 span{color:var(--mu);font-weight:400}
-.meta{margin:10px 0;color:var(--mu);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.cert{border:1px solid var(--mu);border-radius:4px;padding:0 6px;font-size:13px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-.chips span{background:var(--p2);border:1px solid var(--ln);border-radius:99px;padding:2px 12px;font-size:13px}
-.chips.g span{border-color:var(--ac);color:var(--ac);background:none}
-.ov{max-width:70ch;color:var(--mu);margin:12px 0}
-.cast{display:flex;gap:14px;overflow-x:auto;padding:4px 0 14px}
-.pc{flex:none;width:112px;text-align:center}
-.pc img,.pc .ph{width:112px;height:150px;aspect-ratio:auto;object-fit:cover;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font:600 28px var(--hf);color:var(--mu)}
-.pc b{display:block;font-size:13px;font-weight:500;margin-top:6px;line-height:1.25}
-.pc small{display:block;color:var(--mu);font-size:12px;line-height:1.25}
-.panel{background:var(--p);border:1px solid var(--ln);border-radius:var(--r);padding:22px;margin-top:28px}
-.panel h3{font-size:20px;margin-bottom:12px}
-.row{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-input,textarea,select{background:var(--bg);border:1px solid var(--ln);border-radius:calc(var(--r)*.75);padding:8px 12px}
-input[type=color]{padding:0;width:44px;height:32px;cursor:pointer}
-input[type=range]{accent-color:var(--ac);padding:0}
-textarea{width:100%;min-height:70px;resize:vertical}
-.st{display:inline-flex;cursor:pointer;user-select:none}
-.s{font-style:normal;font-size:32px;line-height:1;width:1.05em;color:var(--ln)}
-.s.f{color:var(--gd)}
-.s.h{background:linear-gradient(90deg,var(--gd) 50%,var(--ln) 50%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.rv{font:600 28px var(--hf);color:var(--gd);min-width:50px}
-.pill{color:var(--ac);font-weight:500}
-.li{display:flex;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--ln)}
-.li img{width:44px;aspect-ratio:2/3;object-fit:cover;border-radius:5px}
-.li div{flex:1}.li .r{color:var(--gd);font-weight:600;flex:none}
-.x{background:none;border:0;color:var(--mu);cursor:pointer;font-size:17px}.x:hover{color:var(--ac)}.x.d:hover{color:var(--bad)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:18px}
-.stats .panel{margin:0;padding:16px}.stats big{display:block;font:600 32px var(--hf);color:var(--ac)}.stats small{color:var(--mu)}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:14px}
-.two .panel{margin:0}
-.br{display:flex;gap:10px;align-items:center;font-size:13px;margin:5px 0}
-.br span{width:110px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.br i{flex:1;height:8px;background:var(--p2);border-radius:4px;overflow:hidden}
-.br b{display:block;height:100%;background:var(--ac)}.br em{width:30px;font-style:normal;text-align:right}
-.hist{display:flex;align-items:flex-end;gap:3px;height:140px}
-.hist div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
-.hist b{display:block;width:100%;background:var(--gd);border-radius:3px 3px 0 0;min-height:2px;max-height:calc(100% - 14px)}
-.hist small{font-size:10px;color:var(--mu);height:14px}
-.ll{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:4px 0}.ll span{color:var(--mu);white-space:nowrap}
-.pre{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:20px}
-.sw{border:2px solid;border-radius:10px;padding:10px;cursor:pointer;display:flex;flex-wrap:wrap;gap:4px;align-items:center;text-align:left}
-.sw i{width:18px;height:18px;border-radius:50%;display:block}.sw span{width:100%;font-size:13px;margin-top:4px}
-.cu{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:14px}.cu label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mu)}
-#modal{position:fixed;inset:0;z-index:50;background:rgba(5,7,10,.85);display:none;overflow:auto;padding:30px 16px}
-#modal.on{display:block}
-#modal>div{max-width:1000px;margin:0 auto;background:var(--p);border:1px solid var(--ln);border-radius:var(--r);padding:22px}
-.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:14px 0}
-.pg.b{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
-.pg img{width:100%;border-radius:8px;cursor:pointer;border:2px solid transparent;display:block}
-.pg img:hover{border-color:var(--ac)}
-.auth{max-width:380px;margin:12vh auto;padding:0 20px;text-align:center}
-.auth h1{font-size:46px}.auth form{display:grid;gap:10px;margin:22px 0 10px}
-#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--p2);border:1px solid var(--ac);padding:10px 20px;border-radius:99px;z-index:99;display:none}
-@media(max-width:700px){.top{flex-direction:column;align-items:flex-start}.pw{width:150px}.mv{padding-top:150px}#nav{flex-wrap:wrap;padding:10px 14px}.links{margin:0;width:100%;overflow:auto}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+:root{--bg:#0d0f14;--sf:#171a22;--tx:#eef0f5;--mu:#8b93a7;--ac:#7c5cff;--ax:#fff;--gd:#f5c518;--ln:color-mix(in srgb,var(--tx) 12%,transparent)}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,sans-serif}
+a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit;color:inherit}.mu,small{color:var(--mu)}
+header{position:sticky;top:0;z-index:20;display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:12px 24px;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln)}
+.logo{font-weight:800;font-size:22px;letter-spacing:-1px}.logo b{color:var(--ac)}
+nav{display:flex;gap:4px;flex:1}nav a{padding:6px 12px;border-radius:99px;color:var(--mu);font-weight:500}nav a.on,nav a:hover{color:var(--tx);background:var(--ln)}
+input,select,textarea{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:9px 12px;outline:0;max-width:100%}input:focus,textarea:focus,select:focus{border-color:var(--ac)}
+.btn,.tabs button{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:600;display:inline-block}.btn:hover{border-color:var(--ac)}.btn.p,.tabs .on{background:var(--ac);color:var(--ax);border-color:var(--ac)}
+.tabs{display:inline-flex;gap:6px;margin:6px 8px 6px 0}.tabs button{padding:6px 14px;border-radius:99px}
+#app{position:relative;z-index:0;min-height:80vh}main{max-width:1180px;margin:0 auto;padding:24px}.nar{max-width:760px}
+.bd{position:absolute;inset:0 0 auto;height:480px;background-size:cover;background-position:center 20%;opacity:.5;z-index:-1;-webkit-mask:linear-gradient(#000 30%,transparent);mask:linear-gradient(#000 30%,transparent)}
+h1{font-size:34px;letter-spacing:-1px;line-height:1.15}h2{font-size:18px;margin:28px 0 12px}h3{margin-bottom:10px}
+.row{display:flex;gap:14px;overflow-x:auto;padding-bottom:10px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
+.card{position:relative;flex:0 0 150px;min-width:0}.card img,.ph{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:12px;background:var(--sf);display:block;transition:transform .2s}.card:hover img{transform:translateY(-4px)}
+.ct{font-weight:600;font-size:14px;margin-top:6px;line-height:1.3}.hb{position:absolute;top:8px;right:8px;background:#000a;color:#ff4d6d;border-radius:99px;padding:0 7px}
+.dp{display:flex;gap:28px;padding-top:70px}.pst{width:240px;height:360px;object-fit:cover;border-radius:14px;box-shadow:0 20px 50px #0008;background:var(--sf)}
+.chip{display:inline-block;border:1px solid var(--ln);border-radius:99px;padding:2px 12px;margin:0 6px 6px 0;font-size:13px}
+.stars{display:inline-flex}.stars i{font-style:normal;font-size:20px;background:linear-gradient(90deg,var(--gd) var(--f),color-mix(in srgb,var(--tx) 20%,transparent) var(--f));-webkit-background-clip:text;background-clip:text;color:transparent}.big i{font-size:29px;cursor:pointer}
+.cast{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px}.cm{flex:0 0 112px;text-align:center}.cm img,.cm .ph{width:112px;height:112px;border-radius:50%;object-fit:cover;aspect-ratio:1;background:var(--sf)}.cm div{font-size:13px;font-weight:600;margin-top:6px}.cm small{font-size:12px;display:block}
+.panel{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:18px;margin-bottom:16px}.lg{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--ln)}.lg:last-child{border:0}.lg>div{flex:1;min-width:160px}
+.ov{position:fixed;inset:0;background:#000a;z-index:50;display:grid;place-items:center;padding:16px}.mb{background:var(--bg);border:1px solid var(--ln);border-radius:18px;padding:22px;width:560px;max-width:100%;max-height:90vh;overflow:auto}
+.mb label{display:block;margin:12px 0 4px;color:var(--mu);font-size:13px}.mb input:not([type=file]),.mb textarea{width:100%}.acts{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}.acts2{display:flex;gap:8px;flex-wrap:wrap}.acts2 input{flex:1;min-width:140px}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin:12px 0}.ig.backdrop{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}.ig img{width:100%;border-radius:8px;cursor:pointer;border:2px solid transparent}.ig img:hover{border-color:var(--ac)}.or{text-align:center;color:var(--mu);margin:10px}
+.auth{max-width:380px;margin:12vh auto;padding:0 20px;text-align:center}.auth form{display:grid;gap:10px;margin-top:16px}.auth .logo{font-size:44px;display:block}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ac);color:var(--ax);padding:10px 18px;border-radius:99px;z-index:99;font-weight:600}
+.ld,.err{padding:60px 24px;text-align:center;color:var(--mu)}.err{color:var(--tx)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:16px 0}.tile{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px}.tile b{font-size:26px;display:block;letter-spacing:-.5px}.tile span{color:var(--mu);font-size:13px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}.g2 .panel{margin:0}.hist{display:flex;align-items:flex-end;gap:3px;height:150px}.col{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:10px;color:var(--mu)}.col i{width:100%;background:var(--ac);border-radius:4px 4px 0 0;min-height:2px}.col span{height:16px;margin-top:4px}
+.rk{display:grid;grid-template-columns:minmax(80px,1.2fr) 2fr 28px;gap:10px;align-items:center;margin:6px 0;font-size:14px}.rk span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rk u{height:8px;background:var(--ln);border-radius:9px;overflow:hidden}.rk u i{display:block;height:100%;background:var(--ac)}.rk b{text-align:right}
+.mini{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}.mini a{position:relative}.mini img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px}.bdg{position:absolute;bottom:4px;left:4px;background:#000b;color:var(--gd);font-size:11px;padding:0 6px;border-radius:99px}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}.swb{background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:8px;cursor:pointer;text-align:left}.swb.on{border-color:var(--ac)}.swb span{display:flex;height:18px;border-radius:6px;overflow:hidden;margin-bottom:6px}.swb i{flex:1}
+.cp{display:flex;gap:14px;flex-wrap:wrap}.cp label{display:grid;gap:4px;color:var(--mu);font-size:13px}.cp input{height:40px;width:80px;padding:2px}
+.mh{font-size:13px;font-weight:700;margin:22px 0 6px;color:var(--mu)}
+@media(max-width:700px){header{padding:10px 14px}.dp{flex-direction:column;align-items:center;padding-top:40px}.pst{width:200px;height:300px}main{padding:16px}.big i{font-size:24px}}
 </style></head><body>
-<div id="nav"></div><main id="app"></main><div id="modal"></div><div id="toast"></div>
+<header><a class="logo" href="#/">film<b>stack</b></a><nav><a href="#/">Home</a><a href="#/diary">Diary</a><a href="#/favs">Favorites</a><a href="#/stats">Stats</a></nav><form onsubmit="return srch()"><input id="q" placeholder="Search movies & TV…"></form><a class="btn" href="#/settings" id="ub"></a></header>
+<div id="app"></div><div id="md"></div>
 <script>
-const $=(s,e=document)=>e.querySelector(s),app=$('#app'),LS=localStorage;
-const J=(k,d)=>{try{return JSON.parse(LS.getItem(k))??d}catch{return d}};
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let users=J('mt_u',[]),cur=LS.getItem('mt_c'),D=null,P=null,tt,ST={sc:'all',yr:null,ty:'all'};
-const ld=id=>Object.assign({key:'',logs:[],watch:[],fav:[],ov:{},theme:null},J('mt_d_'+id,{}));
-const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',2400)};
-const save=()=>{try{LS.setItem('mt_d_'+cur,JSON.stringify(D));return true}catch{toast('Storage full. Use smaller images or remove some.');return false}};
-const IM='https://image.tmdb.org/t/p/';
-const img=(p,s='w500')=>!p?'':p[0]=='/'?IM+s+p:p;
-const wrap=h=>`<div class=wrap>${h}</div>`;
+const $=s=>document.querySelector(s),LS=localStorage,IMG='https://image.tmdb.org/t/p/',W=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const TH={Midnight:['#0d0f14','#171a22','#eef0f5','#8b93a7','#7c5cff'],Letterboxd:['#14181c','#202830','#e4ecf3','#8899aa','#00e054'],Noir:['#000000','#121212','#ffffff','#888888','#e50914'],Sunset:['#1a0f1f','#2a1630','#ffeede','#b99aa8','#ff7a45'],Ocean:['#08141f','#0f2433','#e6f4ff','#7fa3bd','#2ec4ff'],Forest:['#0e1511','#17221b','#e8f3ea','#86a08d','#5fd38d'],Rose:['#1c1117','#2a1a22','#fdeef3','#b896a4','#ff5c8a'],Dracula:['#282a36','#343746','#f8f8f2','#9aa0c0','#bd93f9'],Nord:['#2e3440','#3b4252','#eceff4','#9aa5b8','#88c0d0'],Gold:['#121008','#1d1a0e','#f7f1dc','#a39b78','#f5c518'],Paper:['#f5f2ec','#ffffff','#1c1b1a','#6f6a60','#d9480f'],Light:['#f4f6fb','#ffffff','#12151c','#667085','#5b45ef']};
+let U=LS.fs_session||null,D=null,M=null,mode='in',ST=0,LG=null,IT='poster',IM=null,DF='all',SS={sc:'y',ty:'all',yr:null};
+const users=()=>JSON.parse(LS.fs_users||'{}'),esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),key=()=>M.type+':'+M.id;
+const load=()=>{D=JSON.parse(LS['fs_d_'+U]||'null')||{key:'',theme:'Midnight',custom:[...TH.Midnight],items:{}}};
+const save=()=>{try{LS['fs_d_'+U]=JSON.stringify(D)}catch(e){toast('Storage full: remove uploaded images or export your data')}};
+const toast=m=>{const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2800)};
+const modal=h=>{$('#md').innerHTML=h?`<div class="ov" onclick="if(event.target==this)modal()"><div class="mb">${h}</div></div>`:''};
 const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
-const hm=m=>m?`${Math.floor(m/60)}h ${m%60}m`:'';
-const K=(t,id)=>t=='tv'?'tv'+id:''+id,lt=l=>l.t||l.s.t||'movie',pth=(t,id)=>`#/${t}/${id}`,cn=c=>typeof c=='string'?{n:c}:c;
-const bd=(a,b)=>b.date.localeCompare(a.date)||b.id-a.id;
-const sc=s=>({id:s.id,t:s.t||'movie',title:s.title,poster_path:s.poster,release_date:s.year});
-const has=s=>x=>x.id==s.id&&(x.t||'movie')==(s.t||'movie');
-function info(s){const[y,m,d]=s.split('-').map(Number),t=new Date(Date.UTC(y,m-1,d)),wd=t.toLocaleDateString('en',{weekday:'long',timeZone:'UTC'}),n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);return{wd,wk:Math.ceil(((t-Date.UTC(t.getUTCFullYear(),0,1))/864e5+1)/7)}}
-/* ---------- themes ---------- */
-const PRE=`Midnight|#0f1218|#171b24|#e9ecf3|#8e96a8|#7cd4ff|#ffcf5a;Noir|#0a0a0a|#151515|#f2f2f2|#8a8a8a|#ffffff|#d9d9d9;Grindhouse|#120808|#1d0f0f|#f3e6e1|#a58b86|#ff4d4d|#ffb347;Synthwave|#130b24|#1d1236|#f1e9ff|#9c8cc0|#ff4fd8|#5ef0ff;Forest|#0c1410|#13201a|#e5efe8|#85a08f|#5fd68a|#e6d36a;Ocean|#07141f|#0d2233|#e3f1fa|#7fa1b8|#34c3ff|#ffd166;Sunset|#1a1014|#2a1820|#fbeee6|#b89a95|#ff8e5e|#ffd36e;Mocha|#1b1512|#271e19|#f0e6dc|#a39183|#d2a679|#f2c14e;Nord|#2e3440|#3b4252|#eceff4|#9aa5b8|#88c0d0|#ebcb8b;Rosé|#191724|#1f1d2e|#e0def4|#908caa|#ebbcba|#f6c177;Paper|#f4f4f1|#ffffff|#1c1d21|#6b6f7a|#2f5bff|#e0a100;Mint Light|#eef6f2|#ffffff|#14261e|#5f7a6c|#0f9d6a|#e9a400`.split(';').map(x=>{const[n,bg,p,tx,mu,ac,gd]=x.split('|');return{n,bg,p,tx,mu,ac,gd}});
-const FN={Serif:'"Iowan Old Style","Palatino Linotype",Georgia,serif',Sans:'system-ui,-apple-system,"Segoe UI",sans-serif',Mono:'ui-monospace,"SF Mono",Menlo,monospace'};
-function applyTheme(t){t=t||PRE[0];const r=document.documentElement.style;['bg','p','tx','mu','ac','gd'].forEach(k=>r.setProperty('--'+k,t[k]));r.setProperty('--hf',FN[t.f||'Serif']);r.setProperty('--r',(t.r??12)+'px');const c=parseInt(t.ac.slice(1),16);r.setProperty('--on',((c>>16)*299+(c>>8&255)*587+(c&255)*114)/1000>150?'#0b0b0b':'#fff')}
-const setPre=i=>{D.theme={...PRE[i],f:D.theme?.f,r:D.theme?.r};applyTheme(D.theme);save();settings()};
-const cust=(k,v)=>{D.theme={...(D.theme||PRE[0]),[k]:v,n:'Custom'};applyTheme(D.theme);save()};
-/* ---------- accounts: stored only in this browser, passwords PBKDF2-hashed ---------- */
-const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b)));
-async function hash(pw,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);return b64(await crypto.subtle.deriveBits({name:'PBKDF2',salt:Uint8Array.from(atob(salt),c=>c.charCodeAt(0)),iterations:150000,hash:'SHA-256'},k,256))}
-function authView(reg){$('#nav').innerHTML='';app.innerHTML=`<div class=auth><h1>Filmstack</h1><p class=mu>Your film and TV diary. Accounts and logs stay in this browser. Nothing is uploaded.</p>
-<form onsubmit="return auth(event,${!!reg})"><input id=un placeholder="Username" autocomplete=username required><input id=pw type=password placeholder="Password" autocomplete="${reg?'new':'current'}-password" minlength=${reg?6:1} required><button class="btn pri">${reg?'Create account':'Sign in'}</button></form>
-<a class=mu href=# onclick="authView(${!reg});return false">${reg?'Have an account? Sign in':'New here? Create an account'}</a><p id=ae class=err></p></div>`}
-async function auth(e,reg){e.preventDefault();const n=$('#un').value.trim().toLowerCase(),pw=$('#pw').value,u=users.find(x=>x.n==n);
- if(reg){if(u)return $('#ae').textContent='That username is taken.';const salt=b64(crypto.getRandomValues(new Uint8Array(16))),nu={id:'u'+Date.now(),n,salt,h:await hash(pw,salt)};users.push(nu);LS.setItem('mt_u',JSON.stringify(users));LS.setItem('mt_d_'+nu.id,JSON.stringify(ld(nu.id)));login(nu.id)}
- else{if(!u||await hash(pw,u.salt)!=u.h)return $('#ae').textContent='Wrong username or password.';login(u.id)}return false}
-function login(id){cur=id;LS.setItem('mt_c',id);D=ld(id);applyTheme(D.theme);location.hash='#/';route()}
-function logout(){LS.removeItem('mt_c');cur=D=null;applyTheme(null);authView()}
-/* ---------- TMDb ---------- */
-async function api(path,q={}){if(!D.key)throw new Error('Add your TMDb API key in Settings to get started.');
- const u=new URL('https://api.themoviedb.org/3'+path);for(const k in q)u.searchParams.set(k,q[k]);const o={};
- if(D.key.length>40)o.headers={Authorization:'Bearer '+D.key};else u.searchParams.set('api_key',D.key);
- const r=await fetch(u,o);if(!r.ok)throw new Error(r.status==401?'TMDb rejected that API key.':'TMDb error '+r.status);return r.json()}
-const nm=(m,d)=>({id:m.id,t:(m.media_type||d)=='tv'?'tv':'movie',title:m.title||m.name,poster_path:m.poster_path,backdrop_path:m.backdrop_path,overview:m.overview||'',release_date:m.release_date||m.first_air_date||''});
-/* ---------- views ---------- */
-const nav=()=>{const h=location.hash.split('/')[1]||'';$('#nav').innerHTML=`<a class=logo href=#/>Filmstack<i>.</i></a><form onsubmit="location.hash='#/search/'+encodeURIComponent($('#q').value);return false"><input id=q placeholder="Search films and shows"></form><div class=links>${[['','Home'],['diary','Diary'],['lists','Lists'],['stats','Stats'],['settings',esc(users.find(u=>u.id==cur)?.n||'Me')]].map(([k,v])=>`<a href="#/${k}" class="${h==k?'on':''}">${v}</a>`).join('')}</div>`};
-async function route(){if(!D)return authView();nav();scrollTo(0,0);const[,p,a]=location.hash.split('/');
- try{await({'':home,movie:i=>media('movie',i),tv:i=>media('tv',i),search,diary,lists,watchlist:lists,stats,settings}[p||'']||home)(a)}catch(e){app.innerHTML=wrap(`<p class=err>${esc(e.message)}</p>${/key/i.test(e.message)?'<a class="btn pri" href=#/settings>Open settings</a>':''}`)}}
-const card=m=>{const t=m.t||'movie',L=D.logs.filter(l=>l.mid==m.id&&lt(l)==t).sort(bd)[0],p=(D.ov[K(t,m.id)]||{}).poster||m.poster_path,f=D.fav.some(has(m));
- return`<a class=card href="${pth(t,m.id)}">${p?`<img loading=lazy src="${esc(img(p,'w342'))}" alt="">`:'<div class=ph></div>'}${L?`<span class=tag>★ ${L.rating}</span>`:''}${f?'<span class="tag hr">♥</span>':''}<b>${esc(m.title)}</b><small>${(m.release_date||'').slice(0,4)}${t=='tv'?' · TV':''}</small></a>`};
-const grid=(l,c='')=>`<div class="grid ${c}">${l.map(card).join('')}</div>`;
-const seg=(o,v,f)=>`<span class=seg>${o.map(([k,n])=>`<button class="btn s ${k==v?'on':''}" onclick="${f}('${k}')">${n}</button>`).join('')}</span>`;
-async function home(){const w=sessionStorage.w||'week',ty=sessionStorage.ty||'all',r=await api(`/trending/${ty}/${w}`),R=r.results.filter(m=>(m.media_type||ty)!='person').map(m=>nm(m,ty)),h=R.find(m=>m.backdrop_path)||R[0];
- const rec=D.logs.slice().sort(bd).slice(0,6).map(l=>sc(l.s));
- app.innerHTML=`<div class=hero style="background-image:url(${esc(img((D.ov[K(h.t,h.id)]||{}).backdrop||h.backdrop_path,'w1280'))})"><div><h1>${esc(h.title)}</h1><p>${esc(h.overview.slice(0,200))}${h.overview.length>200?'…':''}</p><a class="btn pri" href="${pth(h.t,h.id)}">Open ${h.t=='tv'?'show':'film'}</a></div></div>
- <div class=wrap>${rec.length?`<h2>Recently logged</h2>${grid(rec)}`:''}<h2>Trending</h2><div class=row>${seg([['all','All'],['movie','Movies'],['tv','TV']],ty,'sty')}${seg([['day','Today'],['week','This week']],w,'sw_')}</div>${grid(R)}</div>`}
-const sty=v=>{sessionStorage.ty=v;route()},sw_=v=>{sessionStorage.w=v;route()};
-async function search(q){q=decodeURIComponent(q||'');const r=await api('/search/multi',{query:q,include_adult:false}),R=r.results.filter(m=>m.media_type=='movie'||m.media_type=='tv').map(m=>nm(m));app.innerHTML=wrap(`<h2>Results for “${esc(q)}”</h2>${R.length?grid(R):'<p class=mu>Nothing found. Try another title.</p>'}`)}
-const rg=c=>{try{return new Intl.DisplayNames(['en'],{type:'region'}).of(c)}catch{return c}};
-async function media(t,id){const tv=t=='tv',m=await api(`/${t}/${id}`,{append_to_response:'credits,images,'+(tv?'content_ratings':'release_dates'),include_image_language:'en,null'});
- let cert;if(tv)cert=m.content_ratings.results.find(r=>r.iso_3166_1=='US')?.rating;else cert=(m.release_dates.results.find(r=>r.iso_3166_1=='US')?.release_dates||[]).map(x=>x.certification).find(Boolean);
- let lang='';try{lang=new Intl.DisplayNames(['en'],{type:'language'}).of(m.original_language)}catch{}
- const s={id:m.id,t,title:m.title||m.name,year:(m.release_date||m.first_air_date||'').slice(0,4),director:tv?(m.created_by||[]).map(c=>c.name).join(', '):m.credits.crew.filter(c=>c.job=='Director').map(c=>c.name).join(', '),
-  cast:m.credits.cast.slice(0,16).map(c=>({n:c.name,c:c.character,p:c.profile_path})),genres:m.genres.map(g=>g.name),runtime:tv?(m.episode_run_time?.[0]||m.last_episode_to_air?.runtime||0):m.runtime,cert:cert||'NR',poster:m.poster_path,backdrop:m.backdrop_path,
-  countries:m.production_countries?.length?m.production_countries.map(c=>c.name):(m.origin_country||[]).map(rg),studios:(m.production_companies||[]).slice(0,3).map(c=>c.name),lang,
-  seasons:tv?m.seasons.filter(x=>x.season_number>0).map(x=>({n:x.season_number,e:x.episode_count})):undefined,eps:m.number_of_episodes};
- P={s,imgs:{poster:m.images.posters,backdrop:m.images.backdrops}};
- const o=D.ov[K(t,id)]||{},own=D.logs.filter(l=>l.mid==id&&lt(l)==t).sort(bd),inW=D.watch.some(has(s)),inF=D.fav.some(has(s));
- app.innerHTML=`<div class=bd style="background-image:url(${esc(img(o.backdrop||s.backdrop,'w1280'))})"></div><div class="wrap mv"><div class=top>
- <div class=pw><img src="${esc(img(o.poster||s.poster,'w500'))}" alt=""><button class="btn s" onclick="pick('poster')">Change poster</button></div>
- <div class=info><h1>${esc(s.title)} <span>${s.year}</span></h1><div class=meta><span class=cert>${esc(s.cert)}</span>${tv?`<span>${s.seasons.length} season${s.seasons.length==1?'':'s'}, ${s.eps} episodes${s.runtime?`, ${s.runtime}m each`:''}</span>`:`<span>${hm(s.runtime)||'Runtime n/a'}</span>`}<span>${tv?'Created':'Directed'} by ${esc(s.director||'unknown')}</span></div>
- <div class="chips g">${s.genres.map(g=>`<span>${esc(g)}</span>`).join('')}</div><p class=ov>${esc(m.overview)}</p>
- <div class=row><button class="btn s hr ${inF?'on':''}" onclick="tg('fav')">${inF?'♥ Favorited':'♡ Favorite'}</button><button class="btn s ${inW?'on':''}" onclick="tg('watch')">${inW?'On watchlist':'Add to watchlist'}</button><button class="btn s" onclick="pick('backdrop')">Change backdrop</button></div></div></div>
- <h2>Cast</h2><div class=cast>${s.cast.map(c=>`<div class=pc>${c.p?`<img loading=lazy src="${IM}w185${c.p}" alt="">`:`<div class=ph>${esc(c.n[0])}</div>`}<b>${esc(c.n)}</b><small>${esc(c.c||'')}</small></div>`).join('')||'<p class=mu>No cast listed.</p>'}</div>
- <div class=panel><h3>Log this ${tv?'show':'film'}</h3>${lf('n',{date:today(),rating:7,s})}<button class="btn pri" onclick="logIt()">Log ${tv?'show':'film'}</button></div>
- ${own.length?`<div class=panel><h3>Your logs</h3>${own.map(logRow).join('')}</div>`:''}</div>`}
-/* ---------- logging, star rating, editing ---------- */
-const stars=v=>Array.from({length:10},(_,i)=>`<i class="s ${v>=i+1?'f':v>=i+.5?'h':''}">★</i>`).join('');
-function srate(e,p){const r=e.currentTarget.getBoundingClientRect(),v=Math.min(10,Math.max(.5,Math.ceil((e.clientX-r.left)/r.width*20)/2));e.currentTarget.dataset.v=v;e.currentTarget.innerHTML=stars(v);$('#'+p+'rv').textContent=v}
-const lf=(p,v)=>{const i=info(v.date),sn=v.s.seasons;return`<div class=row><label>Date watched <input type=date id=${p}dt value="${v.date}" max="${today()}" oninput="dinfo('${p}')"></label><span class=pill id=${p}di>${i.wd}, week ${i.wk}</span>${sn?`<select id=${p}sn aria-label=Season><option value="">Whole show</option>${sn.map(x=>`<option value=${x.n} ${v.season==x.n?'selected':''}>Season ${x.n}</option>`).join('')}</select>`:''}<label><input type=checkbox id=${p}rw ${v.rw?'checked':''}> Rewatch</label></div>
-<div class=row><div class=st id=${p}rt data-v=${v.rating} onclick="srate(event,'${p}')" aria-label="Rating, click a star">${stars(v.rating)}</div><span class=rv id=${p}rv>${v.rating}</span></div><textarea id=${p}nt placeholder="Thoughts (optional)">${esc(v.note)}</textarea><div class=row style="margin:14px 0 0">${p=='e'?`<button class="btn pri" onclick="saveEdit(${v.id})">Save changes</button>`:''}</div>`};
-const dinfo=p=>{const v=$('#'+p+'dt').value;if(v){const i=info(v);$('#'+p+'di').textContent=`${i.wd}, week ${i.wk}`}};
-function rd(p,s){const date=$('#'+p+'dt').value;if(!date){toast('Pick a date first.');return}const i=info(date),sv=$('#'+p+'sn')?.value,season=sv?+sv:null;let mins=s.runtime||0;if(s.t=='tv'){const e=season?s.seasons.find(x=>x.n==season)?.e:s.eps;mins=(e||0)*(s.runtime||0)}
- return{date,wd:i.wd,wk:i.wk,rating:+$('#'+p+'rt').dataset.v,note:$('#'+p+'nt').value.trim(),rw:$('#'+p+'rw').checked,season,mins}}
-function logIt(){const r=rd('n',P.s);if(!r)return;D.logs.push({id:Date.now(),mid:P.s.id,t:P.s.t,s:P.s,...r});D.watch=D.watch.filter(w=>!has(P.s)(w));if(save()){toast('Logged');route()}}
-function editLog(id){const l=D.logs.find(x=>x.id==id);$('#modal').innerHTML=`<div><div class=row><h3 style="flex:1">Edit log: ${esc(l.s.title)}</h3><button class="btn s" onclick="closeM()">Close</button></div>${lf('e',l)}</div>`;$('#modal').classList.add('on')}
-function saveEdit(id){const l=D.logs.find(x=>x.id==id),r=rd('e',l.s);if(!r)return;Object.assign(l,r);if(save()){closeM();toast('Saved');route()}}
-function tg(k){const s=P.s;D[k]=D[k].some(has(s))?D[k].filter(x=>!has(s)(x)):[...D[k],s];save();route()}
-function del(id){if(confirm('Delete this log?')){D.logs=D.logs.filter(l=>l.id!=id);save();route()}}
-const logRow=l=>{const t=lt(l);return`<div class=li><a href="${pth(t,l.mid)}"><img loading=lazy src="${esc(img((D.ov[K(t,l.mid)]||{}).poster||l.s.poster,'w185'))}" alt=""></a><div><a href="${pth(t,l.mid)}"><b>${esc(l.s.title)}</b> <span class=mu>${l.s.year}${t=='tv'?' · TV':''}</span></a><br><small class=mu>${l.wd}, ${l.date} · week ${l.wk}${l.season?' · Season '+l.season:''}${l.rw?' · rewatch':''}</small>${l.note?`<br><small>${esc(l.note)}</small>`:''}</div><span class=r>★ ${l.rating}</span><button class=x onclick="editLog(${l.id})" aria-label="Edit log">✎</button><button class="x d" onclick="del(${l.id})" aria-label="Delete log">✕</button></div>`};
-function diary(){const L=D.logs.slice().sort(bd);let mo='',h='';for(const l of L){const m=new Date(l.date+'T00:00').toLocaleDateString('en',{month:'long',year:'numeric'});if(m!=mo){mo=m;h+=`<h2>${m}</h2>`}h+=logRow(l)}
- app.innerHTML=wrap(`<h1>Diary</h1>${h||'<p class=mu>Nothing logged yet. Find a title on the home page and log it.</p>'}`)}
-function lists(){app.innerHTML=wrap(`<h2>Favorites</h2>${D.fav.length?grid(D.fav.map(sc)):'<p class=mu>Tap the heart on any title to add it here.</p>'}<h2>Watchlist</h2>${D.watch.length?grid(D.watch.map(sc)):'<p class=mu>Your watchlist is empty. Add titles from their pages.</p>'}`)}
-/* ---------- stats ---------- */
-const sset=(k,v)=>{ST[k]=v;stats()};
-function stats(){const all=D.logs;if(!all.length)return app.innerHTML=wrap('<h1>Stats</h1><p class=mu>Log a few titles to see your stats.</p>');
- const yrs=[...new Set(all.map(l=>l.date.slice(0,4)))].sort();if(!yrs.includes(ST.yr))ST.yr=yrs[yrs.length-1];
- let L=all.filter(l=>ST.ty=='all'||lt(l)==ST.ty);if(ST.sc=='yr')L=L.filter(l=>l.date.startsWith(ST.yr));
- const head=`<h1>Stats</h1><div class=row style="margin-top:14px">${seg([['all','All time'],['yr','Yearly']],ST.sc,"sset.bind(0,'sc')")}${ST.sc=='yr'?seg(yrs.map(y=>[y,y]),ST.yr,"sset.bind(0,'yr')"):''}${seg([['all','Combined'],['movie','Movies'],['tv','TV shows']],ST.ty,"sset.bind(0,'ty')")}</div>`;
- if(!L.length)return app.innerHTML=wrap(head+'<p class=mu>Nothing logged for this selection.</p>');
- const S=l=>l.s,mn=l=>l.mins??S(l).runtime??0,cnt=f=>{const o={};L.forEach(l=>[].concat(f(l)||[]).forEach(k=>k&&(o[k]=(o[k]||0)+1)));return o},top=(o,n=8)=>Object.keys(o).sort((a,b)=>o[b]-o[a]).slice(0,n);
- const bars=(o,keys)=>{keys=keys||top(o);const mx=Math.max(...keys.map(k=>o[k]||0),1);return keys.map(k=>`<div class=br><span title="${esc(k)}">${esc(k)}</span><i><b style="width:${(o[k]||0)/mx*100}%"></b></i><em>${o[k]||0}</em></div>`).join('')};
- const bp=(t,o,k)=>`<div class=panel><h3>${t}</h3>${Object.keys(o).length?bars(o,k):'<p class=mu>No data yet</p>'}</div>`;
- const n=L.length,tid=l=>lt(l)+l.mid,uniq=new Set(L.map(tid)).size,mins=L.reduce((a,l)=>a+mn(l),0),avg=L.reduce((a,l)=>a+l.rating,0)/n,sr=L.map(l=>l.rating).sort((a,b)=>a-b),med=sr[Math.floor(n/2)];
- const dates=[...new Set(L.map(l=>l.date))].sort();let best=0,run=0,pv=null;for(const d of dates){const t=Date.parse(d+'T00:00Z');run=pv!==null&&t-pv==864e5?run+1:1;best=Math.max(best,run);pv=t}
- const dc=cnt(l=>l.date),bday=top(dc,1)[0],nm_=L.filter(l=>lt(l)=='movie').length,ratedN=n;
- const uq=[...new Map(L.slice().sort(bd).map(l=>[tid(l),l])).values()],byR=uq.slice().sort((a,b)=>b.rating-a.rating||bd(a,b)),lst=(t,a,f)=>`<div class=panel><h3>${t}</h3>${a.map(l=>`<a class=ll href="${pth(lt(l),l.mid)}"><b style="font-weight:500">${esc(S(l).title)}</b><span>${f(l)}</span></a>`).join('')||'<p class=mu>No data yet</p>'}</div>`;
- const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
- const hs=Array.from({length:20},(_,i)=>(i+1)/2),rc=cnt(l=>l.rating),hx=Math.max(...hs.map(k=>rc[k]||0),1),bm=ST.sc=='yr'?cnt(l=>mo[+l.date.slice(5,7)-1]):cnt(l=>l.date.slice(0,4));
- const tiles=[[n,'logs'],[uniq,'unique titles'],[Math.round(mins/60),'hours watched'],[(mins/1440).toFixed(1),'days of watching'],[dates.length,'days with a log'],[best,'day longest streak'],[avg.toFixed(2),'average rating'],[med,'median rating'],[L.filter(l=>l.rw).length,'rewatches'],[hm(Math.round(mins/n))||'n/a','average per log']];
- if(ST.ty=='all')tiles.push([nm_,'movie logs'],[n-nm_,'TV logs']);if(ST.sc=='all')tiles.push([D.fav.filter(f=>ST.ty=='all'||(f.t||'movie')==ST.ty).length,'favorites']);
- app.innerHTML=wrap(head+`<div class=stats>${tiles.map(([a,b])=>`<div class=panel><big>${a}</big><small>${b}</small></div>`).join('')}</div>
- <div class=two><div class=panel><h3>Ratings</h3><div class=hist>${hs.map(k=>`<div title="${k}: ${rc[k]||0}"><b style="height:${(rc[k]||0)/hx*100}%"></b><small>${Number.isInteger(k)?k:''}</small></div>`).join('')}</div><p class=mu style="margin-top:8px;font-size:13px">Busiest day: ${bday} (${dc[bday]})</p></div>
- ${bp('Weekdays',cnt(l=>l.wd),days)}${ST.sc=='yr'?bp('Months',bm,mo):bp('Years',bm,Object.keys(bm).sort())}${bp('Genres',cnt(l=>S(l).genres),top(cnt(l=>S(l).genres),10))}
- ${bp('Decades',cnt(l=>S(l).year&&Math.floor(S(l).year/10)*10+'s'),Object.keys(cnt(l=>S(l).year&&Math.floor(S(l).year/10)*10+'s')).sort())}${bp('Countries',cnt(l=>S(l).countries))}${bp('Languages',cnt(l=>S(l).lang))}${bp('Studios',cnt(l=>S(l).studios))}
- ${bp(ST.ty=='tv'?'Creators':ST.ty=='movie'?'Directors':'Directors and creators',cnt(l=>(S(l).director||'').split(', ')))}${bp('Actors',cnt(l=>(S(l).cast||[]).slice(0,8).map(c=>cn(c).n)))}${bp('Content ratings',cnt(l=>S(l).cert))}${bp('Busiest weeks',cnt(l=>l.date.slice(0,4)+' week '+l.wk),top(cnt(l=>l.date.slice(0,4)+' week '+l.wk),6))}
- ${lst('Most rewatched',top(cnt(tid),12).filter(k=>cnt(tid)[k]>1).slice(0,6).map(k=>uq.find(l=>tid(l)==k)),l=>cnt(tid)[tid(l)]+' logs')}${lst('Longest',L.slice().sort((a,b)=>mn(b)-mn(a)).slice(0,6),l=>hm(mn(l)))}${lst('Shortest',L.filter(l=>mn(l)>0).sort((a,b)=>mn(a)-mn(b)).slice(0,6),l=>hm(mn(l)))}${lst('Most recent',L.slice().sort(bd).slice(0,6),l=>l.date)}</div>
- <h2>Highest rated</h2>${grid(byR.slice(0,12).map(l=>sc(S(l))),'m')}<h2>Lowest rated</h2>${grid(byR.slice(-6).reverse().map(l=>sc(S(l))),'m')}`)}
-/* ---------- settings ---------- */
-function settings(){const t=D.theme||PRE[0];app.innerHTML=wrap(`<h1>Settings</h1><div class=panel><h3>TMDb API key</h3><p class=mu>Paste your v3 API key or v4 read access token from themoviedb.org/settings/api. It is saved only in this browser, under your account.</p><br><div class=row><input id=ky type=password style="flex:1;min-width:240px" value="${esc(D.key)}" placeholder="API key"><button class="btn pri" onclick="saveKey()">Save and test</button></div></div>
- <div class=panel><h3>Theme</h3><div class=pre>${PRE.map((p,i)=>`<button class=sw onclick="setPre(${i})" style="background:${p.bg};border-color:${t.n==p.n?p.ac:p.p}"><i style="background:${p.p}"></i><i style="background:${p.ac}"></i><i style="background:${p.gd}"></i><span style="color:${p.tx}">${p.n}</span></button>`).join('')}</div>
- <h3>Custom theme</h3><div class=cu>${[['bg','Background'],['p','Panels'],['tx','Text'],['mu','Muted text'],['ac','Accent'],['gd','Stars']].map(([k,n])=>`<label>${n}<input type=color value="${t[k]}" oninput="cust('${k}',this.value)"></label>`).join('')}
- <label>Headings<select onchange="cust('f',this.value)">${Object.keys(FN).map(f=>`<option ${t.f==f?'selected':''}>${f}</option>`).join('')}</select></label><label>Corner radius<input type=range min=0 max=24 value="${t.r??12}" oninput="cust('r',+this.value)"></label></div>
- <button class="btn s" onclick="D.theme=null;applyTheme(null);save();settings()">Reset to Midnight</button></div>
- <div class=panel><h3>Your data</h3><p class=mu>Logs live in this browser only. Export a backup to move them to another device.</p><br><div class=row><button class=btn onclick="exp()">Export backup</button><label class=btn>Import backup<input type=file accept=.json hidden onchange="imp(this.files[0])"></label></div></div>
- <div class=panel><h3>Account</h3><div class=row><button class=btn onclick="logout()">Sign out</button><button class=btn onclick="delAcc()" style="color:var(--bad)">Delete account and data</button></div></div>`)}
-async function saveKey(){D.key=$('#ky').value.trim();save();try{await api('/configuration');toast('Key works')}catch(e){toast(e.message)}}
-function exp(){const{key,...r}=D,a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(r)],{type:'application/json'}));a.download='filmstack-backup.json';a.click()}
-async function imp(f){try{const r=JSON.parse(await f.text());if(!Array.isArray(r.logs))throw 0;D={...D,logs:r.logs,watch:r.watch||[],fav:r.fav||[],ov:r.ov||{},theme:r.theme||D.theme};save();applyTheme(D.theme);toast('Imported');route()}catch{toast('That file is not a Filmstack backup.')}}
-function delAcc(){if(confirm('Delete this account and all its logs? This cannot be undone.')){users=users.filter(u=>u.id!=cur);LS.setItem('mt_u',JSON.stringify(users));LS.removeItem('mt_d_'+cur);logout()}}
-/* ---------- image picker ---------- */
-function pick(k){const L=(P.imgs[k]||[]).slice(0,60),b=k=='backdrop';
- $('#modal').innerHTML=`<div><div class=row><h3 style="flex:1">Choose a ${k}</h3><button class="btn s" onclick="closeM()">Close</button></div>
- <div class=row><input id=ul placeholder="Paste an image link" style="flex:1;min-width:220px"><button class="btn s" onclick="useUrl('${k}')">Use link</button><label class="btn s">Upload photo<input type=file accept="image/*" hidden onchange="upl('${k}',this.files[0])"></label><button class="btn s" onclick="setImg('${k}',null)">Reset to default</button></div>
- <div class="pg ${b?'b':''}">${L.map(i=>`<img loading=lazy src="${IM}${b?'w300':'w185'}${i.file_path}" onclick="setImg('${k}','${i.file_path}')" alt="">`).join('')||'<p class=mu>TMDb has no alternatives. Paste a link or upload instead.</p>'}</div></div>`;$('#modal').classList.add('on')}
-const closeM=()=>$('#modal').classList.remove('on');
-function setImg(k,v){const id=K(P.s.t,P.s.id);D.ov[id]=D.ov[id]||{};if(v)D.ov[id][k]=v;else delete D.ov[id][k];if(save()){closeM();route()}}
-function useUrl(k){const u=$('#ul').value.trim();if(!/^https?:\/\//.test(u))return toast('Enter a full link starting with https://');setImg(k,u)}
-function upl(k,f){if(!f)return;const i=new Image();i.onload=()=>{const w=k=='backdrop'?1280:500,s=Math.min(1,w/i.width),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);setImg(k,c.toDataURL('image/jpeg',.82))};i.src=URL.createObjectURL(f)}
-$('#modal').onclick=e=>{if(e.target.id=='modal')closeM()};
+const wk=d=>{const t=new Date(d+'T12:00Z'),n=(t.getUTCDay()+6)%7;t.setUTCDate(t.getUTCDate()-n+3);const f=new Date(Date.UTC(t.getUTCFullYear(),0,4));return 1+Math.round(((t-f)/864e5-3+(f.getUTCDay()+6)%7)/7)};
+const wd=d=>W[new Date(d+'T12:00Z').getUTCDay()];
+function applyTheme(){const t=D?(D.theme=='Custom'?D.custom:TH[D.theme]||TH.Midnight):TH.Midnight,r=document.documentElement.style;['bg','sf','tx','mu','ac'].forEach((k,i)=>r.setProperty('--'+k,t[i]));const[R,G,B]=[1,3,5].map(i=>parseInt(t[4].substr(i,2),16));r.setProperty('--ax',R*.299+G*.587+B*.114>150?'#000':'#fff')}
+async function hash(p,s){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(p),'PBKDF2',false,['deriveBits']),b=await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(s),iterations:150000,hash:'SHA-256'},k,256);return btoa(String.fromCharCode(...new Uint8Array(b)))}
+async function api(p,q=''){if(!D.key)throw Error('Add your TMDb API key in Settings to load movies and shows.');const bear=D.key.length>40,r=await fetch('https://api.themoviedb.org/3'+p+'?'+(bear?'':'api_key='+D.key+'&')+q,bear?{headers:{Authorization:'Bearer '+D.key}}:{});if(!r.ok)throw Error(r.status==401?'TMDb rejected your API key. Check it in Settings.':'TMDb error '+r.status);return r.json()}
+/* auth */
+function authView(){$('header').style.display='none';$('#app').innerHTML=`<div class="auth"><a class="logo">film<b>stack</b></a><p class="mu">Log every film and show you watch.</p><div class="tabs"><button class="${mode=='in'?'on':''}" onclick="mode='in';authView()">Sign in</button><button class="${mode=='up'?'on':''}" onclick="mode='up';authView()">Create account</button></div><form onsubmit="auth(event)"><input id="u" placeholder="Username" autocomplete="username"><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="${mode=='in'?'current':'new'}-password"><button class="btn p">${mode=='in'?'Sign in':'Create account'}</button></form><p class="mu" style="margin-top:16px;font-size:13px">Accounts live only in this browser. Passwords are salted and hashed; nothing is sent anywhere.</p></div>`}
+async function auth(e){e.preventDefault();const u=$('#u').value.trim().toLowerCase(),p=$('#pw').value,us=users();if(u.length<2||p.length<6)return toast('Username 2+ characters, password 6+');
+if(mode=='up'){if(us[u])return toast('That username is taken');const s=crypto.randomUUID();us[u]={s,h:await hash(p,s)};LS.fs_users=JSON.stringify(us)}else if(!us[u]||us[u].h!=await hash(p,us[u].s))return toast('Wrong username or password');
+U=u;LS.fs_session=u;load();boot()}
+const boot=()=>{applyTheme();$('header').style.display='';$('#ub').textContent=U;route()};
+const out=()=>{LS.removeItem('fs_session');U=D=null;applyTheme();route()};
+/* helpers */
+const stars=(r,i)=>[...Array(10)].map((_,j)=>`<i ${i?`onclick="sc(event,${j+1})"`:''} style="--f:${r>=j+1?100:r>=j+.5?50:0}%">★</i>`).join('');
+const norm=(r,t)=>({id:r.id,type:t||r.media_type,title:r.title||r.name,year:(r.release_date||r.first_air_date||'').slice(0,4),poster:r.poster_path});
+const card=it=>{const s=D.items[it.type+':'+it.id],u=s?.poster||(it.poster?(it.poster[0]=='/'?IMG+'w342'+it.poster:it.poster):'');return`<a class="card" href="#/${it.type}/${it.id}">${u?`<img loading="lazy" src="${esc(u)}">`:'<div class="ph"></div>'}${s?.fav?'<span class="hb">♥</span>':''}<div class="ct">${esc(it.title)}</div><small>${it.year||''}${s?.logs?.length?' · ✓ logged':''}</small></a>`};
+const allLogs=()=>{const a=[];for(const it of Object.values(D.items))for(const l of it.logs||[])a.push({...it,...l});return a};
+/* routing */
+async function route(){if(!U)return authView();const[,p='',a]=location.hash.split('/');document.querySelectorAll('nav a').forEach(x=>x.classList.toggle('on',x.getAttribute('href')=='#/'+p));$('#app').innerHTML='<div class="ld">Loading…</div>';scrollTo(0,0);
+try{if(p=='movie'||p=='tv'){M=await detail(p,a);dview()}else if(p=='search')await search(decodeURIComponent(a||''));else if(p=='diary')diary();else if(p=='favs')favs();else if(p=='stats')stats();else if(p=='settings')settings();else await home()}
+catch(e){$('#app').innerHTML=`<main><div class="err">${esc(e.message)}<br><br>${D.key?'':'<a class="btn p" href="#/settings">Open settings</a>'}</div></main>`}}
 addEventListener('hashchange',route);
-if(cur&&users.some(u=>u.id==cur)){D=ld(cur);applyTheme(D.theme);route()}else authView();
+const srch=()=>{location.hash='#/search/'+encodeURIComponent($('#q').value);return false};
+/* home & search */
+async function home(){const[m,t]=await Promise.all([api('/trending/movie/week'),api('/trending/tv/week')]),f=m.results[0],rec=Object.values(D.items).filter(i=>i.logs?.length).sort((a,b)=>b.logs.map(l=>l.date).sort().pop().localeCompare(a.logs.map(l=>l.date).sort().pop())).slice(0,12);
+$('#app').innerHTML=`<div class="bd" style="background-image:url(${IMG}w1280${f.backdrop_path})"></div><main><div style="padding:50px 0 10px"><h1>Trending this week</h1><p class="mu">Welcome back, ${esc(U)}. Find something to log.</p></div>${rec.length?`<h2>Recently logged</h2><div class="row">${rec.map(card).join('')}</div>`:''}<h2>Trending movies</h2><div class="row">${m.results.map(r=>card(norm(r,'movie'))).join('')}</div><h2>Trending TV shows</h2><div class="row">${t.results.map(r=>card(norm(r,'tv'))).join('')}</div></main>`}
+async function search(q){const r=(await api('/search/multi','query='+encodeURIComponent(q))).results.filter(x=>x.media_type!='person');$('#app').innerHTML=`<main><h1>Results for “${esc(q)}”</h1><br><div class="grid">${r.map(x=>card(norm(x))).join('')||'<p class="mu">Nothing found.</p>'}</div></main>`}
+/* detail */
+async function detail(type,id){const m=type=='movie',d=await api(`/${type}/${id}`,'append_to_response=credits,'+(m?'release_dates':'content_ratings'));let cert='';
+try{cert=m?d.release_dates.results.find(x=>x.iso_3166_1=='US').release_dates.find(x=>x.certification).certification:d.content_ratings.results.find(x=>x.iso_3166_1=='US').rating}catch(e){}
+return{id:+id,type,title:d.title||d.name,year:(d.release_date||d.first_air_date||'').slice(0,4),dir:m?d.credits.crew.filter(c=>c.job=='Director').map(c=>c.name):(d.created_by||[]).map(c=>c.name),cast:d.credits.cast.slice(0,20).map(c=>({n:c.name,ch:c.character,p:c.profile_path})),genres:d.genres.map(g=>g.name),rt:m?d.runtime:(d.episode_run_time?.[0]||d.last_episode_to_air?.runtime||0),eps:d.number_of_episodes||0,seasons:d.number_of_seasons||0,cert,tag:d.tagline||'',ov:d.overview||'',poster:d.poster_path?IMG+'w500'+d.poster_path:'',backdrop:d.backdrop_path?IMG+'w1280'+d.backdrop_path:''}}
+function ens(){const o=D.items[key()]||{logs:[],fav:0};D.items[key()]={...o,...M,poster:o.poster||M.poster,backdrop:o.backdrop||M.backdrop}}
+function dview(){const m=M,s=D.items[key()]||{},logs=(s.logs||[]).slice().sort((a,b)=>b.date.localeCompare(a.date)),rt=logs.find(l=>l.rating),
+len=m.type=='movie'?(m.rt?Math.floor(m.rt/60)+'h '+m.rt%60+'m':''):[m.rt&&m.rt+'m per episode',m.seasons&&m.seasons+' season'+(m.seasons>1?'s':''),m.eps&&m.eps+' episodes'].filter(Boolean).join(', ');
+$('#app').innerHTML=`<div class="bd" style="background-image:url(${esc(s.backdrop||m.backdrop)})"></div><main><div class="dp"><img class="pst" src="${esc(s.poster||m.poster)}"><div><h1>${esc(m.title)} <small>${m.year}</small></h1><p class="mu" style="margin:6px 0 12px">${m.type=='movie'?'Directed by':'Created by'} <b style="color:var(--tx)">${esc(m.dir.join(', ')||'Unknown')}</b>${len?' · '+len:''}${m.cert?' · '+esc(m.cert):''} · ${m.type=='tv'?'TV show':'Movie'}</p><div>${m.genres.map(g=>`<span class="chip">${esc(g)}</span>`).join('')}</div>${m.tag?`<p class="mu" style="font-style:italic;margin:8px 0">${esc(m.tag)}</p>`:''}<p style="max-width:62ch;margin:8px 0 16px">${esc(m.ov)}</p>
+<div class="acts2"><button class="btn p" onclick="logM()">+ Log ${m.type=='tv'?'show':'film'}</button><button class="btn" onclick="fav()" style="color:${s.fav?'#ff4d6d':'inherit'}">${s.fav?'♥ Favorited':'♡ Favorite'}</button><button class="btn" onclick="imgM()">Change images</button></div>${rt?`<p style="margin-top:16px"><span class="stars">${stars(rt.rating,0)}</span> <b>${rt.rating}</b><small> / 10 · latest rating</small></p>`:''}</div></div>
+<h2>Cast</h2><div class="cast">${m.cast.map(c=>`<div class="cm">${c.p?`<img loading="lazy" src="${IMG}w185${c.p}">`:'<div class="ph"></div>'}<div>${esc(c.n)}</div><small>${esc(c.ch||'')}</small></div>`).join('')||'<p class="mu">No cast listed.</p>'}</div>
+<h2>Your logs</h2><div class="panel">${logs.map(l=>`<div class="lg"><div><b>${wd(l.date)}, ${l.date}</b><br><small>Week ${wk(l.date)}${l.min?' · '+l.min+' min':''}</small>${l.note?`<p>${esc(l.note)}</p>`:''}</div><span><span class="stars">${stars(l.rating,0)}</span> <b>${l.rating||'–'}</b></span><button class="btn" onclick="logM('${l.lid}')">Edit</button><button class="btn" onclick="delLog('${l.lid}')">Delete</button></div>`).join('')||'<p class="mu">Not logged yet. Hit “Log” to add your first entry.</p>'}</div></main>`}
+function fav(){ens();const s=D.items[key()];s.fav=s.fav?0:1;save();dview()}
+function delLog(id){if(!confirm('Delete this log?'))return;const s=D.items[key()];s.logs=s.logs.filter(l=>l.lid!=id);save();dview()}
+function logM(id){const m=M,l=id?D.items[key()].logs.find(x=>x.lid==id):{date:today(),rating:0,note:'',min:m.type=='tv'?(m.rt*m.eps||m.rt):m.rt};ST=l.rating;LG=id||null;
+modal(`<h2 style="margin-top:0">${id?'Edit log':'Log'}: ${esc(m.title)}</h2><label>Date watched</label><input type="date" id="ld" value="${l.date}" oninput="dl()"><p id="dd" style="margin-top:6px;font-weight:600"></p><label>Rating</label><div id="st"></div><label>Minutes watched</label><input type="number" id="lm" value="${l.min||0}"><label>Notes</label><textarea id="ln" rows="3">${esc(l.note)}</textarea><div class="acts"><button class="btn" onclick="modal()">Cancel</button><button class="btn p" onclick="saveLog()">Save</button></div>`);dl();rs()}
+const dl=()=>{const d=$('#ld').value;$('#dd').textContent=d?`${wd(d)} · Week ${wk(d)}`:''};
+const rs=()=>$('#st').innerHTML=`<div class="stars big">${stars(ST,1)}</div> <b>${ST?ST+' / 10':'Unrated'}</b> <small>(click a star's left or right half)</small>`;
+function sc(e,n){const r=e.target.getBoundingClientRect(),v=e.clientX-r.left<r.width/2?n-.5:n;ST=ST==v?0:v;rs()}
+function saveLog(){const d=$('#ld').value;if(!d)return toast('Pick a date');ens();const s=D.items[key()],o={lid:LG||Date.now().toString(36),date:d,rating:ST,min:+$('#lm').value||0,note:$('#ln').value.trim()};s.logs=LG?s.logs.map(x=>x.lid==LG?o:x):[...s.logs,o];save();modal();dview();toast('Saved')}
+async function imgM(k){IT=k||IT;modal('<div class="ld">Loading images…</div>');if(!IM||IM.k!=key())try{IM={k:key(),...await api(`/${M.type}/${M.id}/images`,'include_image_language=en,null')}}catch(e){IM={k:key(),posters:[],backdrops:[]}}
+const p=IT=='poster',L=(p?IM.posters:IM.backdrops).slice(0,40);
+modal(`<h2 style="margin-top:0">Change images</h2><div class="tabs"><button class="${p?'on':''}" onclick="imgM('poster')">Posters</button><button class="${p?'':'on'}" onclick="imgM('backdrop')">Backdrops</button></div><div class="ig ${IT}">${L.map(i=>`<img loading="lazy" src="${IMG}${p?'w342':'w500'}${i.file_path}" onclick="setImg(IT,'${IMG}${p?'w500':'w1280'}${i.file_path}')">`).join('')||'<p class="mu">No images on TMDb.</p>'}</div><div class="or">Or use your own</div><div class="acts2"><input id="iu" placeholder="Paste an image link…"><button class="btn" onclick="setImg(IT,$('#iu').value.trim())">Use link</button><label class="btn" style="margin:0">Upload<input type="file" accept="image/*" hidden onchange="upl(IT,this.files[0])"></label></div><div class="acts"><button class="btn" onclick="modal()">Close</button></div>`)}
+function setImg(k,u){if(!u)return;ens();D.items[key()][k]=u;save();modal();dview()}
+function upl(k,f){if(!f)return;const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const mx=k=='poster'?600:1280,s=Math.min(1,mx/i.width),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);setImg(k,c.toDataURL('image/jpeg',.82))};i.src=r.result};r.readAsDataURL(f)}
+/* diary & favorites */
+function diary(){const a=allLogs().filter(x=>DF=='all'||x.type==DF).sort((x,y)=>y.date.localeCompare(x.date)),g={};a.forEach(l=>(g[l.date.slice(0,7)]??=[]).push(l));
+$('#app').innerHTML=`<main class="nar"><h1>Diary</h1><div class="tabs" style="margin-top:12px">${[['all','All'],['movie','Movies'],['tv','TV shows']].map(([k,n])=>`<button class="${DF==k?'on':''}" onclick="DF='${k}';diary()">${n}</button>`).join('')}</div>${Object.entries(g).map(([mo,ls])=>`<div class="mh">${new Date(mo+'-15T12:00Z').toLocaleDateString('en',{month:'long',year:'numeric'})}</div><div class="panel">${ls.map(l=>`<a class="lg" href="#/${l.type}/${l.id}"><img src="${esc(l.poster)}" width="40" style="border-radius:6px"><div><b>${esc(l.title)}</b> <small>${l.year}</small><br><small>${wd(l.date).slice(0,3)} ${l.date.slice(5)} · Week ${wk(l.date)}</small></div><span class="stars">${stars(l.rating,0)}</span>${l.fav?'<span style="color:#ff4d6d">♥</span>':''}</a>`).join('')}</div>`).join('')||'<p class="mu" style="margin-top:20px">Nothing logged yet. Search for a title to start.</p>'}</main>`}
+function favs(){const a=Object.values(D.items).filter(i=>i.fav);$('#app').innerHTML=`<main><h1>Favorites</h1><br><div class="grid">${a.map(card).join('')||'<p class="mu">Tap ♡ on any title to add it here.</p>'}</div></main>`}
+/* stats */
+function stats(){const A=allLogs(),yrs=[...new Set(A.filter(l=>l.rating).map(l=>l.date.slice(0,4)))].sort();if(!yrs.includes(SS.yr))SS.yr=yrs[yrs.length-1];const Y=SS.sc=='y',
+L=A.filter(l=>(SS.ty=='all'||l.type==SS.ty)&&(!Y||l.date.startsWith(SS.yr))),R=L.filter(l=>l.rating),n=L.length,sum=(a,f)=>a.reduce((s,x)=>s+f(x),0),uq=new Set(L.map(l=>l.type+l.id)).size,
+cnt=f=>{const m=new Map;L.forEach(l=>f(l).forEach(k=>k&&m.set(k,(m.get(k)||0)+1)));return m},
+hist=(a,l)=>{const m=Math.max(...a,1);return`<div class="hist">${a.map((v,i)=>`<div class="col" title="${l[i]}: ${v}"><i style="height:${v/m*100}%"></i><span>${l[i]}</span></div>`).join('')}</div>`},
+rank=(m,k=8)=>{const a=[...m].sort((x,y)=>y[1]-x[1]).slice(0,k),mx=a[0]?.[1]||1;return a.map(([k,v])=>`<div class="rk"><span>${esc(k)}</span><u><i style="width:${v/mx*100}%"></i></u><b>${v}</b></div>`).join('')||'<p class="mu">No data yet</p>'},
+pn=(t,b)=>`<div class="panel"><h3>${t}</h3>${b}</div>`,
+ds=[...new Set(L.map(l=>l.date))].sort();let st=0,run=0,pv=null;for(const d of ds){run=pv&&new Date(d)-new Date(pv)==864e5?run+1:1;st=Math.max(st,run);pv=d}
+const wdc=[1,2,3,4,5,6,0].map(d=>L.filter(l=>new Date(l.date+'T12:00Z').getUTCDay()==d).length),topd=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][wdc.indexOf(Math.max(...wdc))],
+uniq=a=>{const s=new Set;return a.filter(l=>!s.has(l.type+l.id)&&s.add(l.type+l.id))},mini=a=>`<div class="grid mini">${a.map(l=>`<a href="#/${l.type}/${l.id}" title="${esc(l.title)}"><img src="${esc(l.poster)}"><span class="bdg">★ ${l.rating}</span></a>`).join('')||'<p class="mu">No ratings yet</p>'}</div>`,
+top=uniq(R.slice().sort((a,b)=>b.rating-a.rating||b.date.localeCompare(a.date))).slice(0,6),low=uniq(R.slice().sort((a,b)=>a.rating-b.rating||b.date.localeCompare(a.date))).slice(0,6),
+ys=L.map(l=>+l.date.slice(0,4)),y0=Math.min(...ys),y1=Math.max(...ys),yl=y1>=y0?[...Array(y1-y0+1)].map((_,i)=>y0+i):[],
+T=[['Entries',n],['Titles',uq],['Hours watched',(sum(L,l=>l.min)/60).toFixed(1)],['Average rating',R.length?(sum(R,l=>l.rating)/R.length).toFixed(2):'–'],['Favorites',new Set(L.filter(l=>l.fav).map(l=>l.type+l.id)).size],['Days active',ds.length],['Longest streak',st+' day'+(st==1?'':'s')],['Avg length',n?Math.round(sum(L,l=>l.min)/n)+' min':'–'],['Rewatches',n-uq],['Busiest weekday',n?topd:'–'],['5★+ ratings',R.filter(l=>l.rating>=9).length],['Under 5',R.filter(l=>l.rating<5).length]];
+if(SS.ty=='all')T.splice(2,0,['Movies',L.filter(l=>l.type=='movie').length],['TV shows',L.filter(l=>l.type=='tv').length]);
+const bt=(k,v,t)=>`<button class="${SS[k]==v?'on':''}" onclick="SS.${k}='${v}';stats()">${t}</button>`;
+$('#app').innerHTML=`<main><h1>Stats</h1><div style="margin-top:14px"><div class="tabs">${bt('sc','y','Yearly')}${bt('sc','t','Total')}</div><div class="tabs">${bt('ty','all','Combined')}${bt('ty','movie','Movies')}${bt('ty','tv','TV shows')}</div>${Y&&yrs.length?`<select onchange="SS.yr=this.value;stats()">${yrs.map(y=>`<option ${y==SS.yr?'selected':''}>${y}</option>`).join('')}</select>`:''}</div>${Y&&!yrs.length?'<p class="mu" style="margin-top:20px">Rate something to unlock yearly stats.</p>':`<div class="tiles">${T.map(([k,v])=>`<div class="tile"><b>${v}</b><span>${k}</span></div>`).join('')}</div><div class="g2">
+${pn('Ratings',hist([...Array(20)].map((_,i)=>R.filter(l=>l.rating==(i+1)/2).length),[...Array(20)].map((_,i)=>i%2?(i+1)/2:'')))}
+${pn(Y?'By month':'By year',Y?hist([...Array(12)].map((_,i)=>L.filter(l=>+l.date.slice(5,7)==i+1).length),[...'JFMAMJJASOND']):hist(yl.map(y=>ys.filter(v=>v==y).length),yl))}
+${pn('By weekday',hist(wdc,['Mon','Tue','Wed','Thu','Fri','Sat','Sun']))}
+${pn('Top genres',rank(cnt(l=>l.genres)))}${pn('Top directors',rank(cnt(l=>l.dir)))}${pn('Top actors',rank(cnt(l=>l.cast.slice(0,10).map(c=>c.n))))}
+${pn('By decade released',rank(cnt(l=>[l.year&&Math.floor(l.year/10)*10+'s'])))}${pn('Content ratings',rank(cnt(l=>[l.cert])))}${pn('Busiest weeks',rank(cnt(l=>[l.date.slice(0,4)+' · Week '+wk(l.date)]),5))}
+${pn('Highest rated',mini(top))}${pn('Lowest rated',mini(low))}</div>`}</main>`}
+/* settings */
+function settings(){$('#app').innerHTML=`<main class="nar"><h1>Settings</h1><br><div class="panel"><h3>TMDb API key</h3><p class="mu" style="margin-bottom:10px">Paste your TMDb v3 API key or read access token. It stays in this browser.</p><div class="acts2"><input id="ak" type="password" value="${esc(D.key)}"><button class="btn p" onclick="D.key=$('#ak').value.trim();save();toast('Key saved')">Save</button></div></div>
+<div class="panel"><h3>Theme</h3><div class="sw">${Object.keys(TH).map(n=>`<button class="swb ${D.theme==n?'on':''}" onclick="setTh('${n}')"><span>${TH[n].map(c=>`<i style="background:${c}"></i>`).join('')}</span>${n}</button>`).join('')}</div><div class="mh">Custom theme${D.theme=='Custom'?' (active)':''}</div><div class="cp">${['Background','Surface','Text','Muted','Accent'].map((n,i)=>`<label>${n}<input type="color" value="${D.custom[i]}" oninput="cu(${i},this.value)"></label>`).join('')}</div></div>
+<div class="panel"><h3>Your data</h3><p class="mu" style="margin-bottom:10px">Logs live in this browser. Export a backup to move them to another device.</p><div class="acts2"><button class="btn" onclick="exp()">Export JSON</button><label class="btn" style="margin:0">Import JSON<input type="file" accept=".json" hidden onchange="imp(this.files[0])"></label><button class="btn" onclick="out()">Sign out</button><button class="btn" onclick="delAcc()" style="color:#ff4d6d">Delete account</button></div></div></main>`}
+const setTh=n=>{D.theme=n;save();applyTheme();settings()},cu=(i,v)=>{D.custom[i]=v;D.theme='Custom';save();applyTheme()};
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({...D,key:''})],{type:'application/json'}));a.download=`filmstack-${U}.json`;a.click()}
+function imp(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result);if(!j.items)throw 0;D={...D,...j,key:D.key};save();applyTheme();toast('Imported');settings()}catch(e){toast('Not a valid FilmStack file')}};r.readAsText(f)}
+function delAcc(){if(confirm('Delete this account and all its logs?')){const us=users();delete us[U];LS.fs_users=JSON.stringify(us);LS.removeItem('fs_d_'+U);out()}}
+if(U&&users()[U]){load();boot()}else{U=null;route()}
 </script></body></html>
