@@ -48,11 +48,13 @@ h1{font-size:34px;letter-spacing:-1px;line-height:1.15}h2{font-size:18px;margin:
 </style></head><body>
 <header><a class="logo" href="#/">film<b>stack</b></a><nav><a href="#/">Home</a><a href="#/diary">Diary</a><a href="#/favs">Favorites</a><a href="#/stats">Stats</a><a href="#/watchlist">Watchlist</a><a href="#/lists">Lists</a></nav><form onsubmit="return srch()"><input id="q" oninput="deb(srch)" placeholder="Search…"></form><a class="av" href="#/profile" id="ub"></a></header>
 <div id="app"></div><div id="md"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const $=s=>document.querySelector(s),LS=localStorage,IMG='https://image.tmdb.org/t/p/',W=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const TH={Midnight:['#0d0f14','#171a22','#eef0f5','#8b93a7','#7c5cff'],Letterboxd:['#14181c','#202830','#e4ecf3','#8899aa','#00e054'],Noir:['#000000','#121212','#ffffff','#888888','#e50914'],Sunset:['#1a0f1f','#2a1630','#ffeede','#b99aa8','#ff7a45'],Ocean:['#08141f','#0f2433','#e6f4ff','#7fa3bd','#2ec4ff'],Forest:['#0e1511','#17221b','#e8f3ea','#86a08d','#5fd38d'],Rose:['#1c1117','#2a1a22','#fdeef3','#b896a4','#ff5c8a'],Dracula:['#282a36','#343746','#f8f8f2','#9aa0c0','#bd93f9'],Nord:['#2e3440','#3b4252','#eceff4','#9aa5b8','#88c0d0'],Gold:['#121008','#1d1a0e','#f7f1dc','#a39b78','#f5c518'],Paper:['#f5f2ec','#ffffff','#1c1b1a','#6f6a60','#d9480f'],Light:['#f4f6fb','#ffffff','#12151c','#667085','#5b45ef']};
-let U=LS.fs_session||null,D=null,M=null,mode='in',ST=0,LG=null,IT='poster',IM=null,DF='all',SS={sc:'y',ty:'all',yr:null};
-const users=()=>JSON.parse(LS.fs_users||'{}'),esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),key=()=>M.type+':'+M.id;
+const SB=supabase.createClient('https://mxnwzsafvfiybholvzhy.supabase.co','sb_publishable_39LBnwGAwmG70IzMFncFBw_b1BcLgtD');
+let U=null,D=null,UID=null,M=null,mode='in',ST=0,LG=null,IT='poster',IM=null,DF='all',SS={sc:'y',ty:'all',yr:null};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),key=()=>M.type+':'+M.id;
 const load=()=>{D=JSON.parse(LS['fs_d_'+U]||'null')||{key:'',theme:'Midnight',custom:[...TH.Midnight],items:{}};D.profile??={top:{}};D.people??={};D.lists??=[];D.lists.forEach(l=>l.kind??='content');D.profile.top.actor??=D.profile.top.person};
 const save=()=>{try{LS['fs_d_'+U]=JSON.stringify(D)}catch(e){toast('Storage full: remove uploaded images or export your data')}};
 const toast=m=>{const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2800)};
